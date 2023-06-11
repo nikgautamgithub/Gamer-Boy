@@ -14,19 +14,22 @@ const GameCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
+  const [gamesPost, setGamesPost] = useState([]);
+
   // Search states
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
-  const [gamesPost, setGamesPost] = useState([]);
+
+  const fetchGames = async () => {
+    const response = await fetch("/api/game");
+    const data = await response.json();
+    alert(data);
+    setGamesPost(data);
+  };
 
   useEffect(() => {
-    const fetchGames = async () => {
-      const response = await fetch("/api/game");
-      const data = await response.json();
-      setGamesPost(data);
-    };
     fetchGames();
   }, []);
 
