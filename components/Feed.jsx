@@ -25,7 +25,7 @@ const Feed = () => {
   const fetchGames = async () => {
     const response = await fetch("/api/game");
     const data = await response.json();
-    alert(data);
+    // alert(data);
     setGamesPost(data);
   };
 
