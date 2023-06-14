@@ -23,7 +23,12 @@ const Feed = () => {
 
 
   const fetchGames = async () => {
-    const response = await fetch("/api/game");
+    const response = await fetch(`/api/game?search=${searchText}`,{
+      method: 'GET',
+      headers: {
+        "Cache-Control": "no-store"
+      }
+    });
     const data = await response.json();
     // alert(data);
     setGamesPost(data);
@@ -31,13 +36,13 @@ const Feed = () => {
 
   useEffect(() => {
     fetchGames();
-  }, [gamesPost]);
+  }, [searchText]);
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return gamesPost.filter(
       (item) =>
-        regex.test(item.creator.username) ||
+        regex.test(item.creator?.username) ||
         regex.test(item.tag) ||
         regex.test(item.game) ||
         regex.test(item.gameName)
